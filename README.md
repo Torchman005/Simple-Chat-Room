@@ -16,9 +16,9 @@
 ![Static Badge](https://img.shields.io/badge/Language-Java-orange?style=plastic)
 ![Static Badge](https://img.shields.io/badge/Language-SQL-blue?style=plastic)
 
-![Static Badge](https://img.shields.io/badge/Language-HTML-purple?style=plastic)
-![Static Badge](https://img.shields.io/badge/Language-CSS-green?style=plastic)
-![Static Badge](https://img.shields.io/badge/Language-JavaScript-yellow?style=plastic)
+![Static Badge](https://img.shields.io/badge/API-javafx-purple?style=plastic)
+![Static Badge](https://img.shields.io/badge/API-Junit-green?style=plastic)
+![Static Badge](https://img.shields.io/badge/API-JDBC-yellow?style=plastic)
 
 
 
