@@ -18,12 +18,13 @@ This project is modeled on QQ, and simply implements some basic functions of QQ 
 
 
 ![Static Badge](https://img.shields.io/badge/Language-Java-orange?style=plastic)
-![Static Badge](https://img.shields.io/badge/Language-SQL-blue?style=plastic)
+![Static Badge](https://img.shields.io/badge/Language-CSS-blue?style=plastic)
+![Static Badge](https://img.shields.io/badge/Language-SQL-green?style=plastic)
 
 ![Static Badge](https://img.shields.io/badge/API-javafx-purple?style=plastic)
 ![Static Badge](https://img.shields.io/badge/API-Junit-green?style=plastic)
 ![Static Badge](https://img.shields.io/badge/API-JDBC-yellow?style=plastic)
-
+![Static Badge](https://img.shields.io/badge/API-BCrypt-red?style=plastic)
 
 
 ## 🎉tech stack  技术栈:
