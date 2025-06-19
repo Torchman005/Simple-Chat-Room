@@ -4,6 +4,7 @@ import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
 import com.jinyu.chatcommon.User;
 import com.jinyu.chatcommon.UserType;
+import com.jinyu.dbexecute.SQLs;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -14,6 +15,7 @@ import java.util.Properties;
 
 public class ChatServer {
     ServerSocket ss = null;
+    SQLs sqls = new SQLs();
     // 将用户信息统一存放到项目根目录 Simple-Chat-Room-main/users.txt
     private static final String USER_FILE = "." + File.separator + "users.txt";
     private static Map<String, String> userMap = new HashMap<>();
@@ -29,16 +31,6 @@ public class ChatServer {
             }
         } catch (Exception e) {
             /* 文件不存在时忽略 */ }
-    }
-
-    // 保存用户信息
-    private void saveUser(String userId, String pwd) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(USER_FILE, true))) {
-            bw.write(userId + "," + pwd);
-            bw.newLine();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public ChatServer() throws Exception {
@@ -71,7 +63,7 @@ public class ChatServer {
 
                 if (user.getUserType().equals(UserType.USER_LOGIN)) {
                     // 登录校验
-                    if (userMap.containsKey(user.getUserId()) && userMap.get(user.getUserId()).equals(user.getPwd())) {
+                    if (sqls.login(user.getUserId(), user.getPwd())) {
                         message.setMesType(MessageType.MESSAGE_LOGIN_SUCCEED);
                         // 加入线程
                         ServerConnectClientThread thread = new ServerConnectClientThread(socket, user.getUserId());
@@ -89,11 +81,16 @@ public class ChatServer {
                         socket.close();
                     }
                 } else if (user.getUserType().equals(UserType.USER_REGISTER)) {
+                    // 用来判断是否是用户名已存在错误
+                    boolean ex = false;
+                    // 判断是否登陆成功
+                    boolean rg = false;
+                    rg = sqls.register(ex,user.getUserId(), user.getPwd());
                     // 注册校验
-                    if (!userMap.containsKey(user.getUserId())) {
-                        userMap.put(user.getUserId(), user.getPwd());
-                        saveUser(user.getUserId(), user.getPwd());
+                    if (rg == true && ex == false) {
                         message.setMesType(MessageType.MESSAGE_REGISTER_SUCCEED);
+                    } else if(rg == false && ex == true){
+                        message.setMesType(MessageType.MESSAGE_USERID_EXISTS);
                     } else {
                         message.setMesType(MessageType.MESSAGE_REGISTER_FAIL);
                     }

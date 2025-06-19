@@ -143,9 +143,11 @@ public class ToUserFunction {
             // 判断注册是否成功
             if (mes.getMesType().equals(MessageType.MESSAGE_REGISTER_SUCCEED)) {
                 b = true;
-            } else {
+            } else if(mes.getMesType().equals(MessageType.MESSAGE_USERID_EXISTS)){
                 displayMessage(new Message(MessageType.MESSAGE_SYSTEM, "注册失败(用户名已存在)"));
                 socket.close();
+            } else {
+                displayMessage(new Message(MessageType.MESSAGE_SYSTEM, "注册错误"));
             }
         } catch (Exception e) {
             displayMessage(new Message(MessageType.MESSAGE_SYSTEM, "注册失败: " + e.getMessage()));

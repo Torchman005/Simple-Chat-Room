@@ -17,4 +17,5 @@ public interface MessageType {
     String MESSAGE_REGISTER_FAIL = "13";
     String MESSAGE_REQ_GROUP_LIST = "14";// 请求群聊列表
     String MESSAGE_RET_GROUP_LIST = "15";// 返回群聊列表
+    String MESSAGE_USERID_EXISTS = "16";// 用户名已存在
 }
