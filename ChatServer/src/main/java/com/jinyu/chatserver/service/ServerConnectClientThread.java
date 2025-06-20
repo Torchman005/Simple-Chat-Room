@@ -10,9 +10,12 @@ import java.util.Queue;
 import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
 
+import javax.swing.*;
+
 public class ServerConnectClientThread extends Thread {
     private Socket socket;
     private String userId;
+    private Groups groups = new Groups();
 
     public ServerConnectClientThread(Socket socket, String userId) {
         this.socket = socket;
@@ -67,7 +70,7 @@ public class ServerConnectClientThread extends Thread {
                     oos.writeObject(mes);
                 } else if (mes.getMesType().equals(MessageType.MESSAGE_PULL_GROUP_MES)) {
                     // 拉群，并将群存储
-                    Groups.addGroup(mes.getGroupName(), mes.getGroupMembers());
+                    groups.addGroup(mes.getGroupName());
                     // 新建群聊后，主动推送群聊列表给所有群成员
                     Queue<String> members = mes.getGroupMembers();
                     if (members != null) {
@@ -78,9 +81,9 @@ public class ServerConnectClientThread extends Thread {
                 } else if (mes.getMesType().equals(MessageType.MESSAGE_TO_GROUP_MES)) {
                     // 群发消息
                     // 判断是否有此群聊
-                    if (Groups.hasGroup(mes.getGroupName())) {
+                    if (groups.hasGroup(mes.getGroupName())) {
                         mes.setGroup(true);
-                        Queue<String> group = Groups.getGroup(mes.getGroupName());
+                        Queue<String> group = groups.getGroup(mes.getGroupName());
                         Iterator<String> iterator = group.iterator();
                         while (iterator.hasNext()) {
                             String onlineUser = iterator.next();

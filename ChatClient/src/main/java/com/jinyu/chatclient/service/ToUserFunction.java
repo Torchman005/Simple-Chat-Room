@@ -11,6 +11,7 @@ import com.jinyu.chatcommon.Message;
 import com.jinyu.chatcommon.MessageType;
 import com.jinyu.chatcommon.User;
 import com.jinyu.chatcommon.UserType;
+import com.jinyu.dbexecute.SQLs;
 import com.jinyu.ui.ChatUI;
 
 public class ToUserFunction {
@@ -18,6 +19,7 @@ public class ToUserFunction {
     private User user = new User();
     private Socket socket;
     private ChatUI chatUI;
+    private SQLs sqLs = new SQLs();
 
     public void setChatUI(ChatUI chatUI) {
         this.chatUI = chatUI;

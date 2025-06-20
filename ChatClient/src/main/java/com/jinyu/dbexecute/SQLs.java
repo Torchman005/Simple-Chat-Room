@@ -2,7 +2,6 @@ package com.jinyu.dbexecute;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import javax.swing.plaf.nimbus.State;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -50,7 +49,7 @@ public class SQLs {
         // 用户密码使用密文存储
         String hashedPwd = BCrypt.hashpw(pwd, BCrypt.gensalt());
         // 使用PreparedStatement防止sql注入
-        String insertSql = "insert into users (user_id,pwd) values(?,?);";
+        String insertSql = "insert into users (userid,pwd) values(?,?);";
         try {
             PreparedStatement pstmt = conn.prepareStatement(insertSql);
             pstmt.setString(1, userId);
@@ -152,7 +151,7 @@ public class SQLs {
             String sql = "insert into group_members (user_id, group_name) values (?,?);";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,userId);
-            pstmt.setString(2,groupName);
+            pstmt.setString(1,groupName);
             int jubge = pstmt.executeUpdate();
             pstmt.close();
             conn.close();
@@ -167,7 +166,7 @@ public class SQLs {
     public boolean isGroup(String groupName){
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
-            String sql = "select build_time from groups where group_name = ?;";
+            String sql = "select build_time where group_name = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,groupName);
             ResultSet rs = pstmt.executeQuery();

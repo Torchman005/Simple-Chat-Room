@@ -2,6 +2,7 @@ package com.jinyu.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -54,7 +55,7 @@ public class CreateGroupDialog {
 
         // 创建标题
         Label titleLabel = new Label("创建群聊");
-        titleLabel.setFont(Font.font("Microsoft YaHei", FontWeight.BOLD, 24));
+        titleLabel.setFont(Font.font(getAvailableFont(), FontWeight.BOLD, 24));
         titleLabel.setTextFill(Color.WHITE);
         titleLabel.setStyle("-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);");
 
@@ -71,12 +72,12 @@ public class CreateGroupDialog {
         // 群名称输入
         VBox groupNameBox = new VBox(5);
         Label groupNameLabel = new Label("群名称：");
-        groupNameLabel.setFont(Font.font("Microsoft YaHei", 14));
+        groupNameLabel.setFont(Font.font(getAvailableFont(), 14));
         groupNameLabel.setTextFill(Color.WHITE);
 
         groupNameField = new TextField();
         groupNameField.setPromptText("请输入群名称");
-        groupNameField.setFont(Font.font("Microsoft YaHei", 14));
+        groupNameField.setFont(Font.font(getAvailableFont(), 14));
         groupNameField.setStyle("-fx-background-color: rgba(255, 255, 255, 0.1); " +
                 "-fx-text-fill: white; " +
                 "-fx-prompt-text-fill: rgba(255, 255, 255, 0.7); " +
@@ -92,12 +93,12 @@ public class CreateGroupDialog {
         userInputBox.setAlignment(Pos.CENTER_LEFT);
 
         Label userIdLabel = new Label("用户ID：");
-        userIdLabel.setFont(Font.font("Microsoft YaHei", 14));
+        userIdLabel.setFont(Font.font(getAvailableFont(), 14));
         userIdLabel.setTextFill(Color.WHITE);
 
         userIdField = new TextField();
         userIdField.setPromptText("请输入要添加的用户ID");
-        userIdField.setFont(Font.font("Microsoft YaHei", 14));
+        userIdField.setFont(Font.font(getAvailableFont(), 14));
         userIdField.setStyle("-fx-background-color: rgba(255, 255, 255, 0.1); " +
                 "-fx-text-fill: white; " +
                 "-fx-prompt-text-fill: rgba(255, 255, 255, 0.7); " +
@@ -113,7 +114,7 @@ public class CreateGroupDialog {
         // 已选用户列表
         VBox selectedUsersBox = new VBox(5);
         Label selectedUsersLabel = new Label("已选用户：");
-        selectedUsersLabel.setFont(Font.font("Microsoft YaHei", 14));
+        selectedUsersLabel.setFont(Font.font(getAvailableFont(), 14));
         selectedUsersLabel.setTextFill(Color.WHITE);
 
         selectedUsersList = new ListView<>(selectedUsers);
@@ -203,7 +204,7 @@ public class CreateGroupDialog {
 
     private Button createStyledButton(String text, String color) {
         Button button = new Button(text);
-        button.setFont(Font.font("Microsoft YaHei", FontWeight.BOLD, 14));
+        button.setFont(Font.font(getAvailableFont(), FontWeight.BOLD, 14));
         button.setStyle("-fx-background-color: " + color + "; " +
                 "-fx-text-fill: white; " +
                 "-fx-background-radius: 5; " +
@@ -225,5 +226,17 @@ public class CreateGroupDialog {
                 "-fx-padding: 8 20; " +
                 "-fx-cursor: hand;"));
         return button;
+    }
+
+    // 自动选择可用中文字体
+    private static String getAvailableFont() {
+        String[] fonts = {"Microsoft YaHei", "SimHei", "PingFang SC", "SimSun", "Arial Unicode MS"};
+        Set<String> availableFonts = Font.getFamilies().stream().collect(java.util.stream.Collectors.toSet());
+        for (String font : fonts) {
+            if (availableFonts.contains(font)) {
+                return font;
+            }
+        }
+        return Font.getDefault().getFamily();
     }
 }

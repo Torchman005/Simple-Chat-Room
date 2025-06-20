@@ -1,5 +1,5 @@
-com\jinyu\chatcommon\User.class
-com\jinyu\utils\Utility.class
 com\jinyu\chatcommon\MessageType.class
 com\jinyu\chatcommon\Message.class
 com\jinyu\main\ChatMain.class
+com\jinyu\chatcommon\User.class
+com\jinyu\utils\Utility.class
