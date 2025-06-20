@@ -11,6 +11,7 @@ public class SQLTest {
     public void Test() throws SQLException {
         String userId = "anno";
         String pwd = "123456";
+        String groupName = "mygo";
         Properties prop = new Properties();
         String driver;
         String url;
@@ -53,6 +54,35 @@ public class SQLTest {
         pstmt.setString(2, hashedPwd);
         statement.close();
         conn.close();
-    }
 
+        try {
+            conn = DriverManager.getConnection(url, username, password);
+            statement = conn.createStatement();
+            statement.execute("use chat");
+            // 创建群聊表
+            String sql1 = "create table if not exists `groups` (" +
+                    "group_name varchar(32) primary key not null comment '群聊名'," +
+                    "build_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'" +
+                    ");";
+            pstmt = conn.prepareStatement(sql1);
+            pstmt.execute();
+            // 创建群聊成员表
+            String sql = "create table if not exists group_members (" +
+                    "user_id varchar(32) primary key not null comment '成员名'," +
+                    "group_name varchar(32) not null comment '所在群聊'," +
+                    "join_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '加入时间'" +
+                    ");";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.execute();
+            // 在数据库中添加群
+            String insertSql1 = "insert into `groups` (group_name) values(?);";
+            pstmt = conn.prepareStatement(insertSql1);
+            pstmt.setString(1,groupName);
+            int jubge = pstmt.executeUpdate();
+            System.out.println(jubge);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
