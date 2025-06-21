@@ -201,4 +201,22 @@ public class SQLs {
         }
         return members;
     }
+
+    public Queue<String> getGroupNames(){
+        Queue<String> groupNames = new LinkedList<>();
+        try {
+            Connection conn = DriverManager.getConnection(url, username, password);
+            String sql = "select group_name from groups";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                groupNames.add(rs.getString("group_name"));
+            }
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return groupNames;
+    }
 }

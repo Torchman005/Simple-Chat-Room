@@ -7,9 +7,7 @@ import java.util.Iterator;
 import java.util.Queue;
 
 public class Groups {
-    private SQLs sqLs = new SQLs();
-    static HashMap<String, Queue<String>> groups = new HashMap<>();// 利用map存储群组
-    // 这里需要数据库存储群组，目前先用map临时模拟存储
+    SQLs sqLs = new SQLs();
 
     public void addGroup(String groupName) {
         boolean jubge = sqLs.buildGroup(groupName);
@@ -28,10 +26,11 @@ public class Groups {
         return sqLs.isGroup(groupName);
     }
 
-    public static java.util.List<String> getGroupsForUser(String userId) {
+    public java.util.List<String> getGroupsForUser(String userId) {
         java.util.List<String> result = new java.util.ArrayList<>();
-        for (String groupName : groups.keySet()) {
-            Queue<String> members = groups.get(groupName);
+
+        for (String groupName : sqLs.getGroupNames()) {
+            Queue<String> members = sqLs.getGroupMembers(groupName);
             if (members != null && members.contains(userId)) {
                 result.add(groupName);
             }

@@ -75,6 +75,7 @@ public class ServerConnectClientThread extends Thread {
                     Queue<String> members = mes.getGroupMembers();
                     if (members != null) {
                         for (String member : members) {
+                            groups.sqLs.insertGroupMembers(mes.getGroupName(), member);
                             sendGroupListToUser(member);
                         }
                     }
@@ -128,7 +129,7 @@ public class ServerConnectClientThread extends Thread {
     // 新增：推送群聊列表给指定用户
     private void sendGroupListToUser(String userId) {
         try {
-            java.util.List<String> groupList = Groups.getGroupsForUser(userId);
+            java.util.List<String> groupList = groups.getGroupsForUser(userId);
             Message groupListMsg = new Message();
             groupListMsg.setMesType(com.jinyu.chatcommon.MessageType.MESSAGE_RET_GROUP_LIST);
             groupListMsg.setGetter(userId);
